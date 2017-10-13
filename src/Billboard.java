@@ -17,3 +17,9 @@ public interface Billboard extends Remote {
      */
     void setMessage(String message) throws RemoteException;
 }
+
+/**by linfeng
+*Billboard is the remote interface.
+*Its instance is the remote object.
+*
+*/

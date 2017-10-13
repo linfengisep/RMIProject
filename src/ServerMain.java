@@ -36,9 +36,11 @@ public class ServerMain {
                  remoteRegistry = null;
 
         try {
+            //Creates and exports a Registry instance on the local host that accepts requests on the specified port
             localRegistry = LocateRegistry.createRegistry(localPort);
-            if(!isMaster)
-                remoteRegistry = LocateRegistry.getRegistry(master,masterPort);
+            if(!isMaster){
+               remoteRegistry = LocateRegistry.getRegistry(master,masterPort);
+               }
 
         } catch (RemoteException e) {
             e.printStackTrace();

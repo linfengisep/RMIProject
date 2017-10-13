@@ -22,18 +22,19 @@ public class ClientMain {
         serverID = address+":"+port;
 
         try {
-            reg = LocateRegistry.getRegistry(address,port);//Returns a reference to the remote object Registry on the specified host and port. If host is null, the local host is used
+         /*Returns a stub/reference to the remote object Registry (FTBillboard) on the specified host and port(enter at terminal).
+         *If host is null, the local host is used
+         */
+            reg = LocateRegistry.getRegistry(address,port);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
 
         try {
-            currentServer = (FTBillboard) reg.lookup(FTBillboard.LOOKUP_NAME);
+            currentServer = (FTBillboard)reg.lookup(FTBillboard.LOOKUP_NAME);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
-
 
         System.out.println("Starting Stupid client");
 
@@ -42,15 +43,11 @@ public class ClientMain {
 
             System.out.println("Test with message " + message);
 
-
             try {
-
                 currentServer.setMessage(message);
                 Thread.sleep(2500);
                 received = currentServer.getMessage();
             } catch (RemoteException e) {
-
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

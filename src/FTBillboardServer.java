@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 
 /**
  * This class delegates to a BillboardServer instance and replicates values to the other guys
- * Fault detection is done by pinging each others, and leader election is carried out by sorting the server names thx
+ * Fault detection is done by pinging each others, and leader election is carried out by sorting the server names thanks
  * to a local sorted map.
  */
 public class FTBillboardServer extends UnicastRemoteObject implements FTBillboard {
