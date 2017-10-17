@@ -13,7 +13,7 @@ public class BillboardServer extends UnicastRemoteObject implements Billboard {
     @Override
     public void setMessage(String message) throws RemoteException {
 
-        synchronized (msgLock) {
+        synchronized (msgLock) {//the object 'msgLock' that provides the intrinsic lock
             this.message = message;
         }
 

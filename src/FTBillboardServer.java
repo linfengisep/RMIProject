@@ -39,7 +39,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
 
         while(!stop) {
             try {
-                Thread.sleep(PING_FREQ);
+                Thread.sleep(PING_FREQ);     //let the thread suspending for PING_FREQ seconds.
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -95,7 +95,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
 
     private void changeLeader(String master) {
         replicas.remove(master);
-        String newLeader = replicas.firstKey();
+        String newLeader = replicas.firstKey();  //Returns the first (lowest) key currently in this map.
         synchronized (coordinatorLock) {
             coordinator = newLeader;
             if(coordinator.equals(serverName))
@@ -153,7 +153,6 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
                         replicas.remove(replica.getKey());
                     }
                 });
-
                 ftList.add(f);
             }
         }
@@ -182,7 +181,6 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
         // Replicates only if leader
         if(isLeader) {
             replicateMessage(message);
-
         }
     }
 
@@ -195,7 +193,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
     @Override
     public List<String> getNeighbors() throws RemoteException {
         List<String> replicaCopy = new ArrayList<>();
-        replicaCopy.addAll(replicas.keySet());
+        replicaCopy.addAll(replicas.keySet()); //list addAll:Appends all of the elements in the specified collection to the end of this list, in the order that they are returned by the specified collection's iterator
         return replicaCopy;
     }
 
@@ -205,9 +203,9 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
         replicas.put(server,replica);
         System.out.println("Registered " + server);
         // If it is leader, registers back to the replica
-        /**if(isLeader) {
+        if(isLeader) {
             replica.registerReplica(serverName,this);
-        }*/
+        }
 
     }
 
