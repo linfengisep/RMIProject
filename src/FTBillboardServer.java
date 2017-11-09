@@ -1,3 +1,5 @@
+package org.isep.ft;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -10,15 +12,22 @@ import java.util.concurrent.*;
 
 
 /**
- * This class delegates to a BillboardServer instance and replicates values to the other guys
- * Fault detection is done by pinging each others, and leader election is carried out by sorting the server names thanks
+ * This class delegates to a BillboardServer instance and replicates values top the other guys
+ * Fault detection is done by pinging each others, and leader election is carried out by sorting the server names thx
  * to a local sorted map.
  */
 public class FTBillboardServer extends UnicastRemoteObject implements FTBillboard {
 
     public static int THREAD_POOL_SIZE = 2;
     public static int PING_FREQ = 1000;
+
+
+
     private boolean stop =false;
+
+
+
+
     private final Object coordinatorLock = new Object();
     private String coordinator, serverName;
 
@@ -39,7 +48,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
 
         while(!stop) {
             try {
-                Thread.sleep(PING_FREQ);     //let the thread suspending for PING_FREQ seconds.
+                Thread.sleep(PING_FREQ);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -88,6 +97,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
                 if(!replicas.containsKey(nb)) {
                     connectToReplica(nb);
                 }
+
             }
         }
     }
@@ -95,7 +105,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
 
     private void changeLeader(String master) {
         replicas.remove(master);
-        String newLeader = replicas.firstKey();  //Returns the first (lowest) key currently in this map.
+        String newLeader = replicas.firstKey();
         synchronized (coordinatorLock) {
             coordinator = newLeader;
             if(coordinator.equals(serverName))
@@ -153,6 +163,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
                         replicas.remove(replica.getKey());
                     }
                 });
+
                 ftList.add(f);
             }
         }
@@ -181,6 +192,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
         // Replicates only if leader
         if(isLeader) {
             replicateMessage(message);
+
         }
     }
 
@@ -193,7 +205,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
     @Override
     public List<String> getNeighbors() throws RemoteException {
         List<String> replicaCopy = new ArrayList<>();
-        replicaCopy.addAll(replicas.keySet()); //list addAll:Appends all of the elements in the specified collection to the end of this list, in the order that they are returned by the specified collection's iterator
+        replicaCopy.addAll(replicas.keySet());
         return replicaCopy;
     }
 
@@ -203,9 +215,9 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
         replicas.put(server,replica);
         System.out.println("Registered " + server);
         // If it is leader, registers back to the replica
-        if(isLeader) {
+        /**if(isLeader) {
             replica.registerReplica(serverName,this);
-        }
+        }*/
 
     }
 

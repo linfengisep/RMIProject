@@ -1,3 +1,5 @@
+package org.isep.ft;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -6,21 +8,22 @@ import java.rmi.registry.Registry;
 public class ServerMain {
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
-         //and &&, or || in java
-        if(args.length > 2 || args.length==0) {//reminding us to configure one or two localhost each time;
+
+
+        if(args.length > 2 || args.length==0) {
             System.out.println("USAGE: ServerMain local:port [master:port]");
             System.exit(0);
         }
 
-        String local, master;//localhost
-        int localPort, masterPort;//port number
+        String local, master;
+        int localPort, masterPort;
 
         String [] parsed = args[0].split(":");
-        local = parsed[0];  //will get the localhost
-        localPort = Integer.parseInt(parsed[1]);  //will get the localhost port number;
-        boolean isMaster = true; //this port will be served as the master port and master server;
+        local = parsed[0];
+        localPort = Integer.parseInt(parsed[1]);
+        boolean isMaster = true;
 
-        if(args.length > 1) {//if we configure two localhost in the terminal
+        if(args.length > 1) {
             isMaster = false;
             parsed = args[1].split(":");
             master = parsed[0];
@@ -36,11 +39,9 @@ public class ServerMain {
                  remoteRegistry = null;
 
         try {
-            //Creates and exports a Registry instance on the local host that accepts requests on the specified port
             localRegistry = LocateRegistry.createRegistry(localPort);
-            if(!isMaster){
-               remoteRegistry = LocateRegistry.getRegistry(master,masterPort);
-               }
+            if(!isMaster)
+                remoteRegistry = LocateRegistry.getRegistry(master,masterPort);
 
         } catch (RemoteException e) {
             e.printStackTrace();

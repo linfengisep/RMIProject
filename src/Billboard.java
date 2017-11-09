@@ -1,3 +1,5 @@
+package org.isep.ft;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,9 +19,3 @@ public interface Billboard extends Remote {
      */
     void setMessage(String message) throws RemoteException;
 }
-
-/**by linfeng
-*Billboard is the remote interface.
-*Its instance is the remote object.
-*
-*/

@@ -1,3 +1,5 @@
+package org.isep.ft;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -29,10 +31,3 @@ public interface FTBillboard extends Remote,Billboard {
      */
     void registerReplica(String server, FTBillboard replica) throws RemoteException;
 }
-
-
-/**by linfeng
-*FTBillboard is also a remote interface,even through it implements Billboard.
-*Its instance is the remote object.
-*
-*/
