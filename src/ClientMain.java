@@ -1,5 +1,3 @@
-package org.isep.ft;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -24,10 +22,7 @@ public class ClientMain {
      * FIN CORRECTION
      */
 
-
     static public void main(String [] args) throws NotBoundException, RemoteException {
-
-
 
         if(args.length !=2) {
             System.out.println("USAGE: ServerMain master port");
@@ -54,8 +49,6 @@ public class ClientMain {
         /**
          * FIN CORRECTION
          */
-
-
 
         System.out.println("Starting Stupid client");
 
